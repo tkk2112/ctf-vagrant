@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN dpkg-reconfigure -u apt-utils
 
 RUN apt-get update && apt-get install -y software-properties-common unattended-upgrades
-RUN apt-get update
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 RUN apt-get install -y \
     build-essential \
     curl \
@@ -205,4 +205,4 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-
+ENV HOME=/root
