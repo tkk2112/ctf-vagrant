@@ -198,6 +198,7 @@ RUN cd /root/tools \
     && ./install.sh
 
 # Clean up APT when done.
+RUN apt-get autoremove
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN unset DEBIAN_FRONTEND
