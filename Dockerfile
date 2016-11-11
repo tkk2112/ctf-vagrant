@@ -116,10 +116,10 @@ RUN apt-get -y install git build-essential zlib1g-dev liblzma-dev python-magic \
 # Install AFL with QEMU and clang-fast
 RUN apt-get -y install clang llvm libtool-bin
 RUN cd /root/tools \
-    && wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz \
+    && wget http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz \
     && tar -xzvf afl-latest.tgz \
     && rm afl-latest.tgz \
-    && wget --quiet http://llvm.org/releases/3.8.0/clang+llvm-3.8.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz \
+    && wget http://llvm.org/releases/3.8.0/clang+llvm-3.8.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz \
     && xz -d clang* \
     && tar xvf clang* \
     && cd clang* \
