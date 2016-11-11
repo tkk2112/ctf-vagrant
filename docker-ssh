@@ -1,10 +1,8 @@
-#!/bin/bash -xe
+#!/bin/bash
 
-# docker id might be given as a parameter
 DID=$1
 
-if [[ "$DID" == "" ]]; then
-  # if no id given simply just connect to the first running instance
+if [ -z "$DID" ]; then
   DID=$(docker ps | grep -Eo "^[0-9a-z]{8,}\b")
 fi
 ip=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $DID)
