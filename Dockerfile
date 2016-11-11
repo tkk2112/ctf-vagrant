@@ -212,7 +212,7 @@ RUN /usr/sbin/enable_insecure_key
 
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-ENV HOME /root
+RUN echo en_US.UTF-8 > /etc/container_environment/LANG
+RUN echo en_US:en > /etc/container_environment/LANGUAGE
+RUN echo en_US.UTF-8 > /etc/container_environment/LC_ALL
+RUN echo /root > /etc/container_environment/HOME
