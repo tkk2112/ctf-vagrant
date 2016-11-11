@@ -1,1 +1,1 @@
-docker build -t ctf .
+docker build -t garble/ctf .

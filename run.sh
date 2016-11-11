@@ -1,1 +1,1 @@
-docker run --rm -t -i ctf /sbin/my_init -- bash -l
+docker run --rm -t -i garble/ctf /sbin/my_init -- bash -l

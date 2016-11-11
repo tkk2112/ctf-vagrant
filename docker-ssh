@@ -1,0 +1,12 @@
+#!/bin/bash -xe
+
+# docker id might be given as a parameter
+DID=$1
+
+if [[ "$DID" == "" ]]; then
+  # if no id given simply just connect to the first running instance
+  DID=$(docker ps | grep -Eo "^[0-9a-z]{8,}\b")
+fi
+ip=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $DID)
+
+ssh -i $(dirname $0)/insecure_key root@$ip

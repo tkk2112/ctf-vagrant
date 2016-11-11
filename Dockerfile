@@ -52,7 +52,8 @@ RUN apt-get install -y \
     wget \
     silversearcher-ag \
     unzip \
-    cmake
+    cmake \
+    net-tools
 
 RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt-get update
@@ -198,12 +199,20 @@ RUN cd /root/tools \
     && ./install.sh
 
 # Clean up APT when done.
-RUN apt-get autoremove
+RUN apt-get autoremove -y
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN rm -f /etc/service/sshd/down
+
+# Regenerate SSH host keys. baseimage-docker does not contain any, so you
+# have to do that yourself. You may also comment out this instruction; the
+# init system will auto-generate one during boot.
+RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
+RUN /usr/sbin/enable_insecure_key
 
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV HOME=/root
+ENV HOME /root
