@@ -1,15 +1,7 @@
-# Use phusion/baseimage as base image. To make your builds
-# reproducible, make sure you lock down to a specific version, not
-# to `latest`! See
-# https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
-# for a list of version numbers.
-FROM phusion/baseimage:0.9.19
+FROM ubuntu:16.04
 
 MAINTAINER Maintainer Thomas Kristensen
 LABEL Description="ctf image" Version="0.1"
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -202,17 +194,8 @@ RUN cd /root/tools \
 RUN apt-get autoremove -y
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN rm -f /etc/service/sshd/down
-
-# Regenerate SSH host keys. baseimage-docker does not contain any, so you
-# have to do that yourself. You may also comment out this instruction; the
-# init system will auto-generate one during boot.
-RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
-RUN /usr/sbin/enable_insecure_key
-
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
-RUN echo en_US.UTF-8 > /etc/container_environment/LANG
-RUN echo en_US:en > /etc/container_environment/LANGUAGE
-RUN echo en_US.UTF-8 > /etc/container_environment/LC_ALL
-RUN echo /root > /etc/container_environment/HOME
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
