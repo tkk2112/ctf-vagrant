@@ -185,14 +185,15 @@ COPY decompile /usr/bin/decompile
 RUN chmod +x /usr/bin/decompile
 
 # Install dotfiles
-RUN cd /root/tools \
+RUN cd /root \
     && git clone https://github.com/tkk2112/dotfiles.git \
     && cd dotfiles \
     && ./install.sh
 
-# Clean up APT when done.
+# Clean up when done.
 RUN apt-get autoremove -y
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache /root/tools
 
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
