@@ -5,4 +5,4 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-docker run -v $1:/root/host-share --rm -t -i garble/ctf /sbin/my_init -- bash -l
+docker run -v $1:/root/host-share --rm -it --privileged --workdir=/root garble/ctf
