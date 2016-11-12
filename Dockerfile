@@ -248,10 +248,25 @@ RUN cd /root \
     && cd dotfiles \
     && ./install.sh
 
+# Setup ssh
+RUN apt-get install -y openssh-server \
+	&& echo root:root | chpasswd \
+	&& sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config \
+	&& sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
+	&& sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' -i /etc/ssh/sshd_config \
+	&& mkdir -p /root/.ssh \
+	&& mkdir -p /var/run/sshd
+COPY insecure_id_rsa.pub /root/.ssh/authorized_keys
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+EXPOSE 22
+#CMD ["/usr/sbin/sshd", "-D"]
+
 # Clean up
 RUN apt-get autoremove -y
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
+
 
 # set locale
 RUN unset DEBIAN_FRONTEND
@@ -259,3 +274,5 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+CMD ["/usr/sbin/sshd", "-D"]
