@@ -47,20 +47,23 @@ RUN apt-get install -y \
     cmake \
     net-tools
 
+# Install Neovim
 RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt-get update
 RUN apt-get install -y neovim
-
 RUN update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
 RUN update-alternatives --set vi /usr/bin/nvim
 RUN update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
 RUN update-alternatives --set vim /usr/bin/nvim
 RUN update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 RUN update-alternatives --set editor /usr/bin/nvim
-
 RUN pip install --upgrade pip
 RUN pip install --upgrade neovim
+
+# Install angr
 RUN pip install --upgrade angr
+
+# Install pwntools
 RUN pip install --upgrade ipython
 RUN pip install --upgrade pwntools
 
@@ -71,15 +74,21 @@ RUN cd /root/tools \
     && git clone https://github.com/radare/radare2 \
     && cd radare2 \
     && ./sys/install.sh \
-    && make symstall
+    && make symstall \
+    && cd /root/tools \
+    && rm -rf radare2
 
+# Install pwndbg
 RUN cd /root/tools \
     && git clone https://github.com/zachriggle/pwndbg \
     && cd pwndbg \
     && sed 's/sudo//g' setup.sh > non_sudo_setup.sh \
     && chmod +x non_sudo_setup.sh \
-    && ./non_sudo_setup.sh
+    && ./non_sudo_setup.sh \
+    && cd /root/tools \
+    && rm -rf pwndbg
 
+# Install qemu
 RUN apt-get -y install qemu qemu-user qemu-user-static
 RUN apt-get -y install 'binfmt*'
 RUN apt-get -y install libc6-armhf-armel-cross
@@ -101,7 +110,9 @@ RUN cd /root/tools \
     && git clone https://github.com/devttys0/binwalk \
     && cd binwalk \
     && python setup.py install \
-    && apt-get -y install squashfs-tools
+    && apt-get -y install squashfs-tools \
+    && cd /root/tools \
+    && rm -rf binwalk
 
 # Install firmware-mod-kit
 RUN apt-get -y install git build-essential zlib1g-dev liblzma-dev python-magic \
@@ -136,7 +147,9 @@ RUN cd /root/tools \
     && cd qemu* \
     && ./build_qemu_support.sh \
     && cd .. \
-    && make install
+    && make install \
+    && cd /root/tools \
+    && rm -rf clang* afl*
 
 RUN dpkg --add-architecture i386
 RUN apt-get update
@@ -160,24 +173,30 @@ RUN apt-get -y build-dep python-imaging \
 # Install r2pipe
 RUN pip install --upgrade r2pipe
 
+# Install Frida
 RUN pip install --upgrade frida
 
 # Install ROPGadget
 RUN cd /root/tools \
     && git clone https://github.com/JonathanSalwan/ROPgadget \
     && cd ROPgadget \
-    && python setup.py install
+    && python setup.py install \
+    && cd /root/tools \
+    && rm -rf ROPgadget
 
+# Install fzf
 RUN cd /root/tools \
     && git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf \
     && /root/.fzf/install --all --key-bindings --completion
 
 # Install libheap in GDB
 RUN cd /root/tools \
-    && apt-get install libc6-dbg \
+    && apt-get install -y libc6-dbg \
     && git clone https://github.com/cloudburst/libheap \
     && cd libheap \
     && python setup.py install \
+    && cd /root/tools \
+    && rm -rf libheap \
     && echo "python from libheap import *" >> /root/.gdbinit
 
 # Install ctf-tools
@@ -229,11 +248,12 @@ RUN cd /root \
     && cd dotfiles \
     && ./install.sh
 
-# Clean up when done.
+# Clean up
 RUN apt-get autoremove -y
 RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache /root/tools
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
 
+# set locale
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
