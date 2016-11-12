@@ -1,10 +1,9 @@
 #!/bin/bash
 
-DID=$1
+pushd $(dirname $0) > /dev/null
+script=$(pwd)
+popd > /dev/null
 
-if [ -z "$DID" ]; then
-  DID=$(docker ps | grep -Eo "^[0-9a-z]{8,}\b")
-fi
-ip=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $DID)
+ip=$(docker-machine ip)
 
-ssh -i $(dirname $0)/insecure_key root@$ip
+echo "ssh -i $script/insecure_id_rsa root@$ip -p 8022 -o \"UserKnownHostsFile /dev/null\""
