@@ -180,6 +180,45 @@ RUN cd /root/tools \
     && python setup.py install \
     && echo "python from libheap import *" >> /root/.gdbinit
 
+# Install ctf-tools
+RUN apt-get install -y dsniff foremost texinfo subversion \
+    pandoc libxml2-dev libxslt1-dev libcurl4-openssl-dev python-gmpy \
+    tofrodos libsqlite3-dev libpcap-dev libgmp3-dev libevent-dev \
+    autotools-dev
+RUN cd /root && git clone https://github.com/zardus/ctf-tools \
+    && cd ctf-tools \
+    && bin/manage-tools setup
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install subbrute
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install sqlmap
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install mitmproxy
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install dirsearch
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install dirb
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install commix
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install burpsuite
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install exetractor
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pdf-parser
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install peepdf
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install scrdec18
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install testdisk
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install cribdrag
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install foresight
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install featherduster
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install hashpump-partialhash
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install hash-identifier
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install littleblackbox
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install msieve
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pemcrack
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pkcrack
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install python-paddingoracle
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install reveng
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install sslsplit
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install xortool
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install yafu
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install elfkickers
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install xrop
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install evilize
+RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install checksec
+
 # Install decompile
 COPY decompile /usr/bin/decompile
 RUN chmod +x /usr/bin/decompile
