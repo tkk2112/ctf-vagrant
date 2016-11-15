@@ -13,7 +13,7 @@
 * [qira](https://qira.me)
 * [binwalk](https://github.com/devttys0/binwalk)
 * [apktool](http://ibotpeaches.github.io/Apktool/)
----
+
 ### [ctf-tools](https://github.com/zardus/ctf-tools)
 | Category | Tool | Description |
 |----------|------|-------------|
@@ -47,7 +47,7 @@
 | web | [mitmproxy](https://mitmproxy.org/) | CLI Web proxy and python library.  |
 | web | [sqlmap](http://sqlmap.org/) | SQL injection automation engine. |
 | web | [subbrute](https://github.com/TheRook/subbrute) | A DNS meta-query spider that enumerates DNS records, and subdomains. |
----
+
 ### [awesome-ctf](https://github.com/apsdehal/awesome-ctf)
 | Category | Tool | Description |
 |----------|------|-------------|
@@ -68,7 +68,7 @@
 | steganography | [Steghide](http://steghide.sourceforge.net/) | Hide data in various kind of images |
 | web | [W3af](https://github.com/andresriancho/w3af) | Web Application Attack and Audit Framework. |
 | web | [XSSer](http://xsser.sourceforge.net/) | Automated XSS testor |
----
+
 ### Other
 * [foremost](http://foremost.sourceforge.net/) File carver.
 * [dsniff](http://www.monkey.org/~dugsong/dsniff/) Grabs passwords and other data from pcaps/network streams.
