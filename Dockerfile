@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 MAINTAINER Maintainer Thomas Kristensen
-LABEL Description="ctf image" Version="0.1"
+LABEL Description="ctf image" Version="0.2"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -204,39 +204,64 @@ RUN apt-get install -y dsniff foremost texinfo subversion \
     pandoc libxml2-dev libxslt1-dev libcurl4-openssl-dev python-gmpy \
     tofrodos libsqlite3-dev libpcap-dev libgmp3-dev libevent-dev \
     autotools-dev
-RUN cd /root && git clone https://github.com/zardus/ctf-tools \
+RUN cd /root/tools && git clone https://github.com/zardus/ctf-tools \
     && cd ctf-tools \
     && bin/manage-tools setup
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install subbrute
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install sqlmap
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install mitmproxy
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install dirsearch
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install dirb
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install commix
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install burpsuite
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install exetractor
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pdf-parser
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install peepdf
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install scrdec18
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install testdisk
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install cribdrag
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install foresight
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install featherduster
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install hashpump-partialhash
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install hash-identifier
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install littleblackbox
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install msieve
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pemcrack
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install pkcrack
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install python-paddingoracle
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install reveng
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install sslsplit
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install xortool
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install yafu
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install elfkickers
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install xrop
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install evilize
-RUN PATH=/root/ctf-tools/bin:$PATH /root/ctf-tools/bin/manage-tools install checksec
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install subbrute
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install sqlmap
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install dirsearch
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install dirb
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install commix
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install burpsuite
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install exetractor
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install pdf-parser
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install peepdf
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install scrdec18
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install testdisk
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install cribdrag
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install foresight
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install featherduster
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install hashpump-partialhash
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install hash-identifier
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install littleblackbox
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install msieve
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install pemcrack
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install pkcrack
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install python-paddingoracle
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install reveng
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install sslsplit
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install xortool
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install yafu
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install elfkickers
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install xrop
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install evilize
+RUN PATH=/root/tools/ctf-tools/bin:$PATH /root/tools/ctf-tools/bin/manage-tools install checksec
+
+# Install XSSer
+RUN pip install pycurl BeautifulSoup
+RUN cd /root/tools \
+    && wget http://xsser.03c8.net/xsser/xsser_1.7-1_amd64.deb \
+    && dpkg -i xsser_1.7-1_amd64.deb \
+    && rm -rf xsser*
+
+# Install w3af
+RUN pip install clamd==1.0.1 PyGithub==1.21.0 GitPython==0.3.2.RC1 pybloomfiltermmap==0.3.14 \
+        esmre==0.3.1 phply==0.9.1 nltk==3.0.1 chardet==2.1.1 pdfminer==20140328 \
+        futures==2.1.5 pyOpenSSL==0.15.1 scapy-real==2.2.0-dev guess-language==0.2 cluster==1.1.1b3 \
+        msgpack-python==0.4.4 python-ntlm==1.0.1 halberd==0.2.4 darts.util.lru==0.5 \
+        ndg-httpsclient==0.3.3 pyasn1==0.1.7 Jinja2==2.7.3 \
+        vulndb==0.0.17 markdown==2.6.1 psutil==2.2.1 mitmproxy==0.12.1 \
+        ruamel.ordereddict==0.4.8 Flask==0.10.1 PyYAML==3.11
+RUN cd /root/tools \
+    && git clone https://github.com/andresriancho/w3af.git \
+    && cd w3af \
+    && ./w3af_console ; true \
+    && sed 's/sudo //g' -i /tmp/w3af_dependency_install.sh \
+    && sed 's/apt-get/apt-get -y/g' -i /tmp/w3af_dependency_install.sh \
+    && sed 's/pip install/pip install --upgrade/g' -i /tmp/w3af_dependency_install.sh \
+    && /tmp/w3af_dependency_install.sh \
+    && cd /root/tools \
+    && rm -rf w3af
 
 # Install decompile
 COPY decompile /usr/bin/decompile
@@ -250,23 +275,57 @@ RUN cd /root \
 
 # Setup ssh
 RUN apt-get install -y openssh-server \
-	&& echo root:root | chpasswd \
-	&& sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config \
-	&& sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
-	&& sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' -i /etc/ssh/sshd_config \
-	&& mkdir -p /root/.ssh \
-	&& mkdir -p /var/run/sshd
+    && echo root:root | chpasswd \
+    && sed -i 's/prohibit-password/yes/' /etc/ssh/sshd_config \
+    && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
+    && sed 's/UsePrivilegeSeparation yes/UsePrivilegeSeparation no/' -i /etc/ssh/sshd_config \
+    && mkdir -p /root/.ssh \
+    && mkdir -p /var/run/sshd
 COPY insecure_id_rsa.pub /root/.ssh/authorized_keys
-ENV NOTVISIBLE "in users profile"
-RUN echo "export VISIBLE=now" >> /etc/profile
 EXPOSE 22
-#CMD ["/usr/sbin/sshd", "-D"]
 
-# Clean up
-RUN apt-get autoremove -y
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
+# Install steganography tools
+RUN apt-get install -y steghide \
+    pngtools \
+    outguess \
+    exif \
+    exiv2 \
+    imagemagick
 
+# Install stegdetect/stegbreak
+RUN apt-get install -y wamerican \
+    && wget http://old-releases.ubuntu.com/ubuntu/pool/universe/s/stegdetect/stegdetect_0.6-6_amd64.deb \
+    && dpkg -i stegdetect_0.6-6_amd64.deb \
+    && rm -rf stegdetect*
+
+# Install uncompyle2
+RUN cd /root/tools \
+    && git clone https://github.com/wibiti/uncompyle2.git \
+    && cd uncompyle2 \
+    && python setup.py install \
+    && cd /root/tools \
+    && rm -rf uncompyle2
+
+# Install networking tools
+RUN apt-get install -y nmap zmap masscan
+
+# Install forensic tools
+RUN apt-get install -y aircrack-ng samdump2 bkhive
+
+# Install ophcrack
+RUN apt-get install -y ophcrack
+
+# Install John The Jumbo
+RUN cd /root/tools \
+    && git clone --depth 1 https://github.com/magnumripper/JohnTheRipper.git \
+    && cd JohnTheRipper/src \
+    && ./configure \
+    && make -j2 install
+
+# Clean up (commented until squash hits stable)
+#RUN apt-get autoremove -y
+#RUN apt-get clean
+#RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
 
 # set locale
 RUN unset DEBIAN_FRONTEND

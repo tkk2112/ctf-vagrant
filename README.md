@@ -13,13 +13,13 @@
 * [qira](https://qira.me)
 * [binwalk](https://github.com/devttys0/binwalk)
 * [apktool](http://ibotpeaches.github.io/Apktool/)
-
+---
 ### [ctf-tools](https://github.com/zardus/ctf-tools)
 | Category | Tool | Description |
 |----------|------|-------------|
-| binary | [checksec](https://github.com/slimm609/checksec.sh) | Check binary hardening settings. | <!--tool--><!--test-->
+| binary | [checksec](https://github.com/slimm609/checksec.sh) | Check binary hardening settings. |
 | binary | [elfkickers](http://www.muppetlabs.com/~breadbox/software/elfkickers.html) | A set of utilities for working with ELF files. |
-| binary | [evilize](http://www.mathstat.dal.ca/~selinger/md5collision/) | Tool to create MD5 colliding binaries | <!--tool--><!--test-->
+| binary | [evilize](http://www.mathstat.dal.ca/~selinger/md5collision/) | Tool to create MD5 colliding binaries |
 | binary | [xrop](https://github.com/acama/xrop) | Gadget finder. |
 | forensics | [exetractor](https://github.com/kholia/exetractor-clone) | Unpacker for packed Python executables. Supports PyInstaller and py2exe. |
 | forensics | [pdf-parser](http://blog.didierstevens.com/programs/pdf-tools/) | Tool for digging in PDF files |
@@ -47,6 +47,30 @@
 | web | [mitmproxy](https://mitmproxy.org/) | CLI Web proxy and python library.  |
 | web | [sqlmap](http://sqlmap.org/) | SQL injection automation engine. |
 | web | [subbrute](https://github.com/TheRook/subbrute) | A DNS meta-query spider that enumerates DNS records, and subdomains. |
+---
+### [awesome-ctf](https://github.com/apsdehal/awesome-ctf)
+| Category | Tool | Description |
 |----------|------|-------------|
-| forensics | [foremost](http://foremost.sourceforge.net/) | File carver. |
-| dsniff | [dsniff](http://www.monkey.org/~dugsong/dsniff/) | Grabs passwords and other data from pcaps/network streams. |
+| bruteforcers | [John The Jumbo](https://github.com/magnumripper/JohnTheRipper) | Community enhanced version of John the Ripper |
+| bruteforcers | [Ophcrack](http://ophcrack.sourceforge.net/) | Windows password cracker based on rainbow tables. |
+| forensics | [Aircrack-Ng](http://www.aircrack-ng.org/) | Crack 802.11 WEP and WPA-PSK keys |
+| forensics | [Bkhive and Samdump2](http://sourceforge.net/projects/ophcrack/files/samdump2/) | Dump SYSTEM and SAM files |
+| networking | [Masscan](https://github.com/robertdavidgraham/masscan) | Mass IP port scanner, TCP port scanner |
+| networking | [Nmap](https://nmap.org/) | open source utility for network discovery and security auditing |
+| networking | [Zmap](https://zmap.io/) | an open-source network scanner |
+| reversing | [Uncompyle](https://github.com/gstarnberger/uncompyle) | Decompile Python 2.7 binaries (.pyc) |
+| steganography | [Exif](http://manpages.ubuntu.com/manpages/trusty/man1/exif.1.html) | Shows EXIF information in JPEG files |
+| steganography | [Exiv2](http://www.exiv2.org/manpage.html) | Image metadata manipulation tool |
+| steganography | [ImageMagick](http://www.imagemagick.org/script/index.php) | Tool for manipulating images |
+| steganography | [Outguess](https://www.freebsd.org/cgi/man.cgi?query=outguess+&apropos=0&sektion=0&manpath=FreeBSD+Ports+5.1-RELEASE&format=html) | Universal steganographic tool |
+| steganography | [Pngtools](http://www.stillhq.com/pngtools/) | For various analysis related to PNGs |
+| steganography | [Stegbreak](https://linux.die.net/man/1/stegbreak) | Launches brute-force dictionary attacks on JPG image |
+| steganography | [Steghide](http://steghide.sourceforge.net/) | Hide data in various kind of images |
+| web | [W3af](https://github.com/andresriancho/w3af) | Web Application Attack and Audit Framework. |
+| web | [XSSer](http://xsser.sourceforge.net/) | Automated XSS testor |
+---
+### Other
+* [foremost](http://foremost.sourceforge.net/) File carver.
+* [dsniff](http://www.monkey.org/~dugsong/dsniff/) Grabs passwords and other data from pcaps/network streams.
+* [frida](http://www.frida.re/) A world-class dynamic instrumentation framework
+
