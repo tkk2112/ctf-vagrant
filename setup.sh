@@ -1,14 +1,11 @@
 #!/bin/bash -x
 
-if [ "$1" == "/root" ]; then
-    run_sudo=sudo -H
-    HOMEDIR=/root
-else
-    HOMEDIR=/home/ubuntu
-fi
-
 if [ "$EUID" -ne 0 ]; then
-    run_$run_sudo=$run_sudo
+    HOMEDIR=/home/ubuntu
+    run_sudo="sudo -H"
+else
+    run_sudo=
+    HOMEDIR=/root
 fi
 
 cd $HOMEDIR
@@ -83,19 +80,25 @@ echo "export VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwra
 echo "source /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh" >> $HOMEDIR/.bashrc
 
 # Install pwndbg
-cd $HOMEDIR/tools \
-    && git clone https://github.com/zachriggle/pwndbg \
-    && cd pwndbg \
-    && $run_sudo ./setup.sh \
-    && cd $HOMEDIR/tools/pwndbg/capstone/bindings/python \
-    && $run_$run_sudo /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages . \
-    && cd $HOMEDIR/tools/pwndbg/unicorn/bindings/python \
-    && $run_$run_sudo /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages .
+cd $HOMEDIR/tools
+git clone https://github.com/zachriggle/pwndbg
+cd pwndbg
+if [ "$EUID" -ne 0 ]; then
+    ./setup.sh
+else
+    sed 's/sudo//g' setup.sh > non_sudo_setup.sh
+    chmod +x non_sudo_setup.sh
+    ./non_sudo_setup.sh
+fi
+cd $HOMEDIR/tools/pwndbg/capstone/bindings/python
+$run_sudo /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages .
+cd $HOMEDIR/tools/pwndbg/unicorn/bindings/python
+$run_sudo /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages .
 
-$run_$run_sudo pip install --upgrade pip
-$run_$run_sudo pip install --upgrade ipython
-$run_$run_sudo pip install --upgrade angr
-$run_$run_sudo pip install --upgrade pwntools
+$run_sudo pip install --upgrade pip
+$run_sudo pip install --upgrade ipython
+$run_sudo pip install --upgrade angr
+$run_sudo pip install --upgrade pwntools
 
 # Install radare2
 cd $HOMEDIR/tools \
@@ -125,7 +128,7 @@ $run_sudo apt-get update
 cd $HOMEDIR/tools \
     && git clone https://github.com/devttys0/binwalk \
     && cd binwalk \
-    && $run_$run_sudo python setup.py install \
+    && $run_sudo python setup.py install \
     
 # Install firmware-mod-kit
 cd $HOMEDIR/tools \
@@ -156,7 +159,7 @@ cd $HOMEDIR/tools \
     && cd qemu* \
     && ./build_qemu_support.sh \
     && cd .. \
-    && $run_$run_sudo make install \
+    && $run_sudo make install \
     && cd $HOMEDIR/tools \
     && rm -rf clang*
 
@@ -194,13 +197,13 @@ cd $HOMEDIR/tools \
     && $run_sudo make -j2 install
 
 # Install Pillow
-$run_$run_sudo pip install Pillow
+$run_sudo pip install Pillow
 
 # Install r2pipe
-$run_$run_sudo pip install --upgrade r2pipe
+$run_sudo pip install --upgrade r2pipe
 
 # Install Frida
-$run_$run_sudo pip install --upgrade frida
+$run_sudo pip install --upgrade frida
 
 # Install ctf-tools
 cd $HOMEDIR/tools && git clone https://github.com/zardus/ctf-tools \
@@ -237,14 +240,14 @@ $HOMEDIR/tools/ctf-tools/bin/manage-tools install evilize
 $HOMEDIR/tools/ctf-tools/bin/manage-tools install checksec
 
 # Install XSSer
-$run_$run_sudo pip install pycurl BeautifulSoup
+$run_sudo pip install pycurl BeautifulSoup
 cd $HOMEDIR/tools \
     && wget http://xsser.03c8.net/xsser/xsser_1.7-1_amd64.deb \
     && $run_sudo dpkg -i xsser_1.7-1_amd64.deb \
     && rm -rf xsser*
 
 # Install w3af
-$run_$run_sudo pip install clamd==1.0.1 PyGithub==1.21.0 GitPython==0.3.2.RC1 pybloomfiltermmap==0.3.14 \
+$run_sudo pip install clamd==1.0.1 PyGithub==1.21.0 GitPython==0.3.2.RC1 pybloomfiltermmap==0.3.14 \
         esmre==0.3.1 phply==0.9.1 nltk==3.0.1 pdfminer==20140328 \
         pyOpenSSL==0.15.1 scapy-real==2.2.0-dev guess-language==0.2 cluster==1.1.1b3 \
         python-ntlm==1.0.1 halberd==0.2.4 darts.util.lru==0.5 \
@@ -257,23 +260,10 @@ cd $HOMEDIR/tools \
     && ./w3af_console ; true \
     && sed 's/apt-get/apt-get -y/g' -i /tmp/w3af_dependency_install.sh \
     && sed 's/pip install/pip install --upgrade/g' -i /tmp/w3af_dependency_install.sh \
-    && /tmp/w3af_dependency_install.sh
+    && $run_sudo /tmp/w3af_dependency_install.sh
     
 # Install uncompyle2
 cd $HOMEDIR/tools \
     && git clone https://github.com/wibiti/uncompyle2.git \
     && cd uncompyle2 \
-    && $run_$run_sudo python setup.py install
-
-# Clean up (commented until squash hits stable)
-#RUN apt-get autoremove -y
-#RUN apt-get clean
-#RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* $HOMEDIR/.cache
-
-# set locale
-#RUN unset DEBIAN_FRONTEND
-#RUN locale-gen en_US.UTF-8
-#ENV LANG en_US.UTF-8
-#ENV LANGUAGE en_US:en
-#ENV LC_ALL en_US.UTF-8
-
+    && $run_sudo python setup.py install

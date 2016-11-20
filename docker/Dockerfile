@@ -3,8 +3,8 @@ FROM ubuntu:16.04
 MAINTAINER Maintainer Thomas Kristensen
 LABEL Description="ctf image" Version="0.2"
 
-COPY ../setup.sh /root/setup.sh 
-RUN cd /root && ./setup /root
+COPY setup.sh /root/setup.sh 
+RUN cd /root && ./setup.sh /root
 
 # Install decompile
 COPY decompile /usr/bin/decompile

@@ -1,5 +1,4 @@
-# ctfdocker
-
+# ctf
 
 ## Tools/setup from:
 ### [EpicTreasure](https://github.com/ctfhacker/EpicTreasure)
