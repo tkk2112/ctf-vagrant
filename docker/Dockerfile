@@ -4,6 +4,7 @@ MAINTAINER Maintainer Thomas Kristensen
 LABEL Description="ctf image" Version="0.2"
 
 COPY setup.sh /root/setup.sh
+RUN chmod +x /root/setup.sh
 RUN cd /root && ./setup.sh /root
 
 # Install decompile
