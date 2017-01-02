@@ -267,3 +267,6 @@ cd $HOMEDIR/tools \
     && git clone https://github.com/wibiti/uncompyle2.git \
     && cd uncompyle2 \
     && $run_sudo python setup.py install
+
+# Install retdec decompiler
+$run_sudo pip3 install retdec-python
