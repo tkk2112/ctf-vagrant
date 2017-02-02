@@ -268,5 +268,7 @@ cd $HOMEDIR/tools \
     && cd uncompyle2 \
     && $run_sudo python setup.py install
 
+
 # Install retdec decompiler
+$run_sudo apt-get -y install python3-pip
 $run_sudo pip3 install retdec-python
