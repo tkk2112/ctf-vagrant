@@ -64,7 +64,15 @@ sudo -H apt-get install -y \
     gdbserver \
     nmap zmap masscan \
     aircrack-ng samdump2 bkhive \
-    ophcrack
+    ophcrack \
+    nano \
+    most \
+    fcrackzip \
+    dos2unix \
+    libmpfr-dev \
+    libmpc-dev \
+    socat
+
 
 echo "export WORKON_HOME=~/.virtualenvs" >> $HOME/.bashrc
 echo "export PROJECT_HOME=~/.vewdevel" >> $HOME/.bashrc
@@ -260,6 +268,10 @@ cd $HOME/tools \
     && cd uncompyle2 \
     && sudo -H python setup.py install
 
+sudo -H pip install --upgrade pyans1
+sudo -H pip install --upgrade gmpy
+sudo -H pip install --upgrade gmpy2
+sudo -H pip install --upgrade numpy
 
 # Install retdec decompiler
 sudo -H apt-get -y install python3-pip
