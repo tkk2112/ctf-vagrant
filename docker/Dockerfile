@@ -27,6 +27,8 @@ EXPOSE 22
 #RUN apt-get clean
 #RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
 
+RUN apt-get install nano most
+
 # set locale
 RUN unset DEBIAN_FRONTEND
 RUN locale-gen en_US.UTF-8
