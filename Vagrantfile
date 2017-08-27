@@ -7,8 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "10.20.30.40"
   config.vm.synced_folder "host-share", "/home/ubuntu/host-share"
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "vagrant-ctf"
-    vb.customize ["modifyvm", :id, "--memory", "4096"]
+  config.vm.provider "parallels" do |prl|
+    prl.update_guest_tools = true
   end
 end
