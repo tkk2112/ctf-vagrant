@@ -1,4 +1,3 @@
-vagrant/ubuntu-xenial-16.04-cloudimg-console.log
-vagrant/.vagrant
+.vagrant
 host-share/league
 *.log

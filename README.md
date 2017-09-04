@@ -1,5 +1,13 @@
 # ctf
 
+## Usage:
+*starting the vm (will provision the box the first time its run)*
+`$ vagrant up`
+*connecting to the vm*
+`$ vagrant ssh`
+*stopping the vm*
+`$ vagrant halt`
+
 ## Tools/setup from:
 ### [EpicTreasure](https://github.com/ctfhacker/EpicTreasure)
 * [Binjitsu](https://github.com/binjitsu/binjitsu)
@@ -65,7 +73,6 @@
 | steganography | [Pngtools](http://www.stillhq.com/pngtools/) | For various analysis related to PNGs |
 | steganography | [Stegbreak](https://linux.die.net/man/1/stegbreak) | Launches brute-force dictionary attacks on JPG image |
 | steganography | [Steghide](http://steghide.sourceforge.net/) | Hide data in various kind of images |
-| web | [W3af](https://github.com/andresriancho/w3af) | Web Application Attack and Audit Framework. |
 | web | [XSSer](http://xsser.sourceforge.net/) | Automated XSS testor |
 
 ### Other

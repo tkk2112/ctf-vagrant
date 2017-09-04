@@ -1,5 +1,12 @@
 #!/bin/bash -x
 
+sudo locale-gen "en_US.UTF-8"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+echo "LANG=en_US.UTF-8" | sudo tee /etc/default/locale > /dev/null
+echo "LC_ALL=en_US.UTF-8" | sudo tee --append /etc/default/locale > /dev/null
+
 cd $HOME
 mkdir tools
 cd tools
@@ -9,96 +16,38 @@ sudo -H rm -rf /var/lib/apt/lists/*
 
 # Installing the 'apt-utils' package gets rid of the 'debconf: delaying package configuration, since apt-utils is not installed'
 # error message when installing any other package with the apt package manager.
-sudo -H apt-get update && sudo -H apt-get install -y --no-install-recommends \
+sudo -H apt update && sudo -H apt install -y --no-install-recommends \
     apt-utils \
     && sudo -H rm -rf /var/lib/apt/lists/*
 
 sudo -H dpkg-reconfigure -u apt-utils
 
-sudo -H apt-get update && sudo -H apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-sudo -H apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    libc6-arm64-cross \
-    libc6-armhf-cross \
-    libc6-dev-i386 \
-    libc6-i386 \
-    libffi-dev \
-    libssl-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    python-dev \
-    python-dev \
-    python-pip \
-    python2.7 \
-    tmux \
-    tree \
-    virtualenvwrapper \
-    wget \
-    silversearcher-ag \
-    unzip \
-    cmake \
-    net-tools \
-    clang \
-    llvm \
-    libtool-bin \
-    squashfs-tools \
-    zlib1g-dev liblzma-dev python-magic \
-    libtool automake bison libglib2.0-dev \
-    steghide \
-    pngtools \
-    outguess \
-    exif \
-    exiv2 \
-    imagemagick \
-    wamerican \
-    python-imaging \
-    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev \
-    dsniff foremost texinfo subversion \
-    pandoc libxml2-dev libxslt1-dev libcurl4-openssl-dev python-gmpy \
-    tofrodos libsqlite3-dev libpcap-dev libgmp3-dev libevent-dev \
-    autotools-dev libreadline-dev libncurses5-dev \
-    gdb \
-    gdb-multiarch \
-    gdbserver \
-    nmap zmap masscan \
-    aircrack-ng samdump2 bkhive \
-    ophcrack \
-    nano \
-    most \
-    fcrackzip \
-    dos2unix \
-    libmpfr-dev \
-    libmpc-dev \
-    socat
+sudo -H apt update && sudo -H apt upgrade -y -o Dpkg::Options::="--force-confold"
+sudo -H apt install -y \
+    aircrack-ng autoconf automake autotools-dev bison bkhive build-essential \
+    clang cmake curl dos2unix dsniff exif exiv2 fcrackzip foremost g++ gcc gdb \
+    gdb-multiarch gdbserver git imagemagick libc6-arm64-cross libc6-armhf-cross \
+    libc6-dev-i386 libc6-i386 libcurl4-openssl-dev libevent-dev libffi-dev \
+    libfreetype6 libfreetype6-dev libglib2.0-dev libgmp3-dev libjpeg62-dev \
+    libjpeg8 liblzma-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev \
+    libpcap-dev libreadline-dev libsqlite3-dev libssl-dev libtool libtool-bin \
+    libxml2-dev libxslt1-dev llvm lsb-release masscan most nano net-tools nmap \
+    ophcrack outguess pandoc pngtools python python-dev python-gmpy python-imaging \
+    python-magic python-pip python3-pip python2.7 python3 samdump2 silversearcher-ag \
+    socat squashfs-tools steghide subversion texinfo tmux tofrodos tree unzip \
+    virtualenvwrapper wamerican wget zlib1g-dev zmap libgmp-dev libsqlite3-dev
 
-
-echo "export WORKON_HOME=~/.virtualenvs" >> $HOME/.bashrc
-echo "export PROJECT_HOME=~/.vewdevel" >> $HOME/.bashrc
-echo "export VIRTUALENVWRAPPER_SCRIPT=/usr/share/virtualenvwrapper/virtualenvwrapper.sh" >> $HOME/.bashrc
-echo "source /usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh" >> $HOME/.bashrc
 
 # Install pwndbg
 cd $HOME/tools
-git clone https://github.com/zachriggle/pwndbg
+git clone https://github.com/pwndbg/pwndbg
 cd pwndbg
-if [ "$EUID" -ne 0 ]; then
-    ./setup.sh
-else
-    sed 's/sudo//g' setup.sh > non_sudo_setup.sh
-    chmod +x non_sudo_setup.sh
-    ./non_sudo_setup.sh
-fi
-cd $HOME/tools/pwndbg/capstone/bindings/python
-sudo -H /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages .
-cd $HOME/tools/pwndbg/unicorn/bindings/python
-sudo -H /usr/bin/python -m pip install --target /usr/local/lib/python2.7/dist-packages .
+./setup.sh
 
-sudo -H pip install --upgrade pip
-sudo -H pip install --upgrade ipython
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install --upgrade ipython
 sudo -H pip install --upgrade angr
-sudo -H pip install --upgrade pwntools
+sudo -H pip3 install --upgrade pwntools
 
 # Install radare2
 cd $HOME/tools \
@@ -108,27 +57,27 @@ cd $HOME/tools \
     && sudo -H make symstall
 
 # Install qemu
-sudo -H apt-get -y install qemu qemu-user qemu-user-static
-sudo -H apt-get -y install 'binfmt*'
-sudo -H apt-get -y install libc6-armhf-armel-cross
-sudo -H apt-get -y install debian-keyring
-sudo -H apt-get -y install debian-archive-keyring
-sudo -H apt-get -m update; echo 0 # Always success from update
-sudo -H apt-get -y install libc6-mipsel-cross
-sudo -H apt-get -y install libc6-armel-cross libc6-dev-armel-cross
-sudo -H apt-get -y install libc6-armhf-cross libc6-dev-armhf-cross
-sudo -H apt-get -y install binutils-arm-linux-gnueabi
-sudo -H apt-get -y install libncurses5-dev
+sudo -H apt install -y qemu qemu-user qemu-user-static
+sudo -H apt install -y 'binfmt*'
+sudo -H apt install -y libc6-armhf-armel-cross
+sudo -H apt install -y debian-keyring
+sudo -H apt install -y debian-archive-keyring
+sudo -H apt update -m; echo 0 # Always success from update
+sudo -H apt install -y libc6-mipsel-cross
+sudo -H apt install -y libc6-armel-cross libc6-dev-armel-cross
+sudo -H apt install -y libc6-armhf-cross libc6-dev-armhf-cross
+sudo -H apt install -y binutils-arm-linux-gnueabi
+sudo -H apt install -y libncurses5-dev
 sudo -H mkdir /etc/qemu-binfmt
 sudo -H ln -s /usr/mipsel-linux-gnu /etc/qemu-binfmt/mipsel
 sudo -H ln -s /usr/arm-linux-gnueabihf /etc/qemu-binfmt/arm
-sudo -H apt-get update
+sudo -H apt update
 
 # Install binwalk
 cd $HOME/tools \
     && git clone https://github.com/devttys0/binwalk \
     && cd binwalk \
-    && sudo -H python setup.py install \
+    && sudo -H python3 setup.py install \
 
 # Install firmware-mod-kit
 cd $HOME/tools \
@@ -164,12 +113,12 @@ cd $HOME/tools \
     && rm -rf clang*
 
 sudo -H dpkg --add-architecture i386
-sudo -H apt-get update
-sudo -H apt-get -y install libc6:i386 libncurses5:i386 libstdc++6:i386 libc6-dev-i386
+sudo -H apt update
+sudo -H apt install -y libc6:i386 libncurses5:i386 libstdc++6:i386 libc6-dev-i386
 
 # Install apktool
-sudo -H apt-get update \
-    && sudo -H apt-get install -y default-jre \
+sudo -H apt update \
+    && sudo -H apt install -y default-jre \
     && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool \
     && wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.0.2.jar \
     && sudo -H mv apktool_2.0.2.jar /bin/apktool.jar \
@@ -183,6 +132,7 @@ cd $HOME \
     && cd dotfiles \
     && ./install.sh
 
+hash -r
 
 # Install stegdetect/stegbreak
 wget http://old-releases.ubuntu.com/ubuntu/pool/universe/s/stegdetect/stegdetect_0.6-6_amd64.deb \
@@ -197,18 +147,21 @@ cd $HOME/tools \
     && sudo -H make -j2 install
 
 # Install Pillow
-sudo -H pip install Pillow
+sudo -H pip3 install --upgrade Pillow
 
 # Install r2pipe
-sudo -H pip install --upgrade r2pipe
+sudo -H pip3 install --upgrade r2pipe
 
 # Install Frida
-sudo -H pip install --upgrade frida
+sudo -H pip3 install --upgrade frida
 
 # Install ctf-tools
+echo "export PATH=\$PATH:~/tools/ctf-tools/bin" >> $HOME/.bashrc
+export PATH=$PATH:~/tools/ctf-tools/bin
 cd $HOME/tools && git clone https://github.com/zardus/ctf-tools \
     && cd ctf-tools \
     && bin/manage-tools setup
+
 $HOME/tools/ctf-tools/bin/manage-tools install subbrute
 $HOME/tools/ctf-tools/bin/manage-tools install sqlmap
 $HOME/tools/ctf-tools/bin/manage-tools install dirsearch
@@ -240,27 +193,11 @@ $HOME/tools/ctf-tools/bin/manage-tools install evilize
 $HOME/tools/ctf-tools/bin/manage-tools install checksec
 
 # Install XSSer
-sudo -H pip install pycurl BeautifulSoup
+sudo -H pip install --upgrade pycurl BeautifulSoup
 cd $HOME/tools \
-    && wget http://xsser.03c8.net/xsser/xsser_1.7-1_amd64.deb \
+    && wget https://xsser.03c8.net/xsser/xsser_1.7-1_amd64.deb \
     && sudo -H dpkg -i xsser_1.7-1_amd64.deb \
     && rm -rf xsser*
-
-# Install w3af
-sudo -H pip install clamd==1.0.1 PyGithub==1.21.0 GitPython==0.3.2.RC1 pybloomfiltermmap==0.3.14 \
-        esmre==0.3.1 phply==0.9.1 nltk==3.0.1 pdfminer==20140328 \
-        pyOpenSSL==0.15.1 scapy-real==2.2.0-dev guess-language==0.2 cluster==1.1.1b3 \
-        python-ntlm==1.0.1 halberd==0.2.4 darts.util.lru==0.5 \
-        ndg-httpsclient==0.3.3 Jinja2==2.7.3 \
-        vulndb==0.0.17 markdown==2.6.1 mitmproxy==0.12.1 \
-        ruamel.ordereddict==0.4.8 Flask==0.10.1 PyYAML==3.11
-cd $HOME/tools \
-    && git clone https://github.com/andresriancho/w3af.git \
-    && cd w3af \
-    && ./w3af_console ; true \
-    && sed 's/apt-get/apt-get -y/g' -i /tmp/w3af_dependency_install.sh \
-    && sed 's/pip install/pip install --upgrade/g' -i /tmp/w3af_dependency_install.sh \
-    && sudo -H /tmp/w3af_dependency_install.sh
 
 # Install uncompyle2
 cd $HOME/tools \
@@ -268,13 +205,10 @@ cd $HOME/tools \
     && cd uncompyle2 \
     && sudo -H python setup.py install
 
-sudo -H pip install --upgrade pyans1
-sudo -H pip install --upgrade gmpy
-sudo -H pip install --upgrade gmpy2
-sudo -H pip install --upgrade numpy
+sudo -H pip3 install --upgrade gmpy
+sudo -H pip3 install --upgrade gmpy2
+sudo -H pip3 install --upgrade numpy
 
 # Install retdec decompiler
-sudo -H apt-get -y install python3-pip
 sudo -H pip3 install retdec-python
-
 
