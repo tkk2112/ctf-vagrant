@@ -1,12 +1,17 @@
 # ctf
 
 ## Usage:
-*starting the vm (will provision the box the first time its run)*
+
+*starting the vm (will provision the box the first time its run)*  
 `$ vagrant up`
-*connecting to the vm*
+
+*connecting to the vm*  
 `$ vagrant ssh`
-*stopping the vm*
+
+*stopping the vm*  
 `$ vagrant halt`
+
+
 
 ## Tools/setup from:
 ### [EpicTreasure](https://github.com/ctfhacker/EpicTreasure)
